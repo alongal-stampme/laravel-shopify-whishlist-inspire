@@ -2,13 +2,15 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Osiset\ShopifyApp\Traits\ShopModel;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Osiset\ShopifyApp\Contracts\ShopModel as IShopModel;
 
-class User extends Authenticatable
+class User extends Authenticatable implements IShopModel
 {
     use Notifiable;
+    use ShopModel;
 
     /**
      * The attributes that are mass assignable.
