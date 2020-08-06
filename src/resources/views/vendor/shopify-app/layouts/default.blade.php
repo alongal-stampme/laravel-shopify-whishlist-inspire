@@ -28,7 +28,7 @@
                 var app = createApp({
                     apiKey: '{{ config('shopify-app.api_key') }}',
                     shopOrigin: '{{ Auth::user()->name }}',
-                    forceRedirect: true,
+                    forceRedirect: false,
                 });
             </script>
 
