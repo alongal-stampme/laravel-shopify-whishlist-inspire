@@ -6,6 +6,7 @@
 
         <title>{{ config('shopify-app.app_name') }}</title>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
         <script src="https://unpkg.com/turbolinks"></script>
         @yield('styles')
     </head>
