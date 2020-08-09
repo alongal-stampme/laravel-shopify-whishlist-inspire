@@ -2,18 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth.shopify'])->name('home');
 
-Route::get('/products', function () {
-    return view('products');
-})->middleware(['auth.shopify'])->name('products');
+Route::middleware(['auth.shopify'])->group(function () {
 
-Route::get('/customers', function () {
-    return view('customers');
-})->middleware(['auth.shopify'])->name('customers');
+    Route::get('/', function () {
+        return view('dashboard');
+    })->name('home');
 
-Route::get('/settings', function () {
-    return view('settings');
-})->middleware(['auth.shopify'])->name('settings');
+    Route::view('/products', 'products');
+    Route::view('/customers', 'customers');
+    Route::view('/settings', 'settings');
+
+    Route::get('/test.json', function () {
+        $shop = \Illuminate\Support\Facades\Auth::user();
+
+        $shopApi = $shop->api()->rest('GET', '/admin/themes.json')['body'];
+
+        return $shopApi;
+    });
+
+});
