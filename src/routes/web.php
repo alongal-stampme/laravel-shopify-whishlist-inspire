@@ -13,12 +13,23 @@ Route::middleware(['auth.shopify'])->group(function () {
     Route::view('/customers', 'customers');
     Route::view('/settings', 'settings');
 
-    Route::get('/test.json', function () {
+    Route::get('/test', function () {
         $shop = \Illuminate\Support\Facades\Auth::user();
 
-        $shopApi = $shop->api()->rest('GET', '/admin/themes.json')['body'];
+        $themes = $shop->api()->rest('GET', '/admin/themes.json');
 
-        return $shopApi;
+        $activeThemeId = '';
+        foreach ($themes['body']->container['themes'] as $theme) {
+            if ($theme['role'] == 'main') {
+                $activeThemeId = $theme['id'];
+            }
+        }
+
+        $snippet = 'Your snippet code';
+        $array = ['asset' => ['key' => 'snippets/codeinspire-wishlist-app.liquid', 'value' => $snippet]];
+        $shop->api()->rest('PUT', '/admin/themes/' . $activeThemeId . '/assets.json', $array);
+
+        return 'Success';
     });
 
 });
