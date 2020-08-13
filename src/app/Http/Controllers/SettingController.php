@@ -25,6 +25,20 @@ class SettingController extends Controller
         $array = ['asset' => ['key' => 'snippets/codeinspire-wishlist-app.liquid', 'value' => $snippet]];
         $shop->api()->rest('PUT', '/admin/themes/' . $activeThemeId . '/assets.json', $array);
 
+        // save data into database
+        $settings = Setting::where('shop_id', $shop->name)->first();
+        if ( ! $settings) {
+            Setting::create([
+                'shop_id' => $shop->name,
+                'activated' => true,
+            ]);
+        } else {
+            $settings->update([
+                'shop_id' => $shop->name,
+                'activated' => true,
+            ]);
+        }
+
         return [
             'message' => 'Theme setup successfully'
         ];
