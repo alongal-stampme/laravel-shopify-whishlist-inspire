@@ -6,6 +6,7 @@ function addWishlist() {
 
 function removeWishlist() {
     console.log("remove from wishlist")
+
     // send https request
 }
 
